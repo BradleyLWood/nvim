@@ -1,26 +1,20 @@
 vim.pack.add({
     { src = 'https://github.com/folke/noice.nvim', name = 'noice' },
     { src = 'https://github.com/MunifTanjim/nui.nvim', name = 'nui' },
-    { src = 'https://github.com/rcarriga/nvim-notify', name = 'notify' },
+    --{ src = 'https://github.com/rcarriga/nvim-notify', name = 'notify' },
 })
 
-vim.notify = require('notify').setup({
-    background_color = '#000000',
-    render = 'compact',
-    stages = 'slide',
-})
-
-vim.notify = require('noice').setup({
-    messages = {
-        enabled = true,
+require('noice').setup({
         view = 'mini',
         view_error = 'notify',
         view_warn = 'notify',
         view_history = 'messages',
         view_search = 'virtualtext',
+    messages = {
+        enabled = false,
     },
     notify = {
-        enabled = true,
+        enabled = false,
         view = 'notify',
     },
     hover = {

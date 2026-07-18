@@ -10,6 +10,7 @@ vim.pack.add({
     { src = 'https://github.com/nvim-mini/mini.icons', name = 'mini.icons' },
 })
 
+require('mini.statusline').setup()
 require('mini.pairs').setup()
 require('mini.ai').setup()
 require('mini.trailspace').setup()
