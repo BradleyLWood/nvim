@@ -25,8 +25,6 @@ vim.keymap.set('n', 'Q', '<nop>')
 -- Execute tmux-sessionizer
 vim.keymap.set('n', '<M-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
 
-vim.keymap.set("n", "<leader>u", require("undotree").open)
-
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
