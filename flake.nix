@@ -46,7 +46,7 @@
             inherit pkgs;
             env = {
               "CONFIG_ROOT" = ./.;
-              "NVIM_APPNAME" - "nvim-blw-remote";
+              "NVIM_APPNAME" = "nvim-blw-remote";
             ];
             runtimePkgs = with pkgs; [
               lua5_1
