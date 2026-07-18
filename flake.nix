@@ -47,7 +47,7 @@
             env = {
               "CONFIG_ROOT" = ./.;
               "NVIM_APPNAME" = "nvim-blw-remote";
-            ];
+            };
             runtimePkgs = with pkgs; [
               lua5_1
               tree-sitter
