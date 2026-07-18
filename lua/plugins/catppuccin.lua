@@ -1,6 +1,6 @@
 vim.pack.add({
     { src = 'https://github.com/catppuccin/nvim', name = 'catppuccin' },
-    { src = 'hkttps://github.com/tadaa/vimade', name = 'vimade' },
+    { src = 'https://github.com/tadaa/vimade', name = 'vimade' },
 })
 
 require('catppuccin').setup({
