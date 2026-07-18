@@ -46,7 +46,7 @@ vim.opt.updatetime = 100
 vim.opt.timeoutlen = 300
 
 vim.opt.list = false
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' extends = "⟩", precedes = "⟨" }
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣', extends = "⟩", precedes = "⟨" }
 
 vim.opt.termguicolors = true
 vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
