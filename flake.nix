@@ -34,6 +34,7 @@
 
             lua5_1
             tree-sitter
+						fd
             ripgrep
             gcc
             fzf
@@ -51,6 +52,7 @@
             runtimePkgs = with pkgs; [
               lua5_1
               tree-sitter
+							fd
               ripgrep
               gcc
               fzf
