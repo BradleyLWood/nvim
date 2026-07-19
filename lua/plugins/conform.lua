@@ -15,6 +15,18 @@ require('conform').setup({
 		css = { 'prettier' },
 		rust = { 'rustfmt' },
 	},
+  formatters = {
+    ocamlformat = {
+      prepend_args = {
+        '--if-then-else',
+        'vertical',
+        '--break-cases',
+        'fit-or-vertical',
+        '--type-decl',
+        'sparse',
+      },
+    },
+  },
 	format_on_save = false,
 	undojoin = true,
 })
@@ -49,3 +61,18 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 		end
 	end,
 })
+
+
+local function map(mode, key, binding, opts)
+	local options = { noremap = true, silent = true }
+	if opts then
+		options = vim.tbl_extend("force", options, opts)
+	end
+	vim.keymap.set(mode, key, binding, options)
+end
+
+map('n', '<leader>f',
+  function() require('conform').format({ async = true, lsp_fallback = true }) end,
+	{ desc = 'Format buffer'}
+)
+
