@@ -6,19 +6,19 @@ local function map(mode, key, binding, opts)
 	vim.keymap.set(mode, key, binding, options)
 end
 
-map('n', 'J', 'mzJ`z', { desc = 'Append line below without moving cursor' })
+map('n', 'J',     'mzJ`z',   { desc = 'Append line below without moving cursor' })
 map('n', '<C-d>', '<C-d>zz', { desc = 'Half page down, keep cursor centered' })
 map('n', '<C-u>', '<C-u>zz', { desc = 'Half page up, keep cursor centered' })
-map('n', 'n', 'nzzzv', { desc = 'Next search result, keep cursor centered' })
-map('n', 'N', 'Nzzzv', { desc = 'Previous search result, keep cursor centered' })
+map('n', 'n',     'nzzzv',   { desc = 'Next search result, keep cursor centered' })
+map('n', 'N',     'Nzzzv',   { desc = 'Previous search result, keep cursor centered' })
 
 map('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
 map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
-map('x', '<leader>p', '"_dP', { desc = 'Paste without yanking' })
-map({ 'n', 'v' }, '<leader>x', '"_d', { desc = 'Delete without yanking' })
+map('x',          '<leader>p', '"_dP', { desc = 'Paste without yanking' })
+map({ 'n', 'v' }, '<leader>x', '"_d',  { desc = 'Delete without yanking' })
 
-map('n', '<C-n><C-n>', ':set nonumber!<CR>', { desc = 'Toggle line numbers' })
+map('n', '<C-n><C-n>', ':set nonumber!<CR>',       { desc = 'Toggle line numbers' })
 map('n', '<C-m><C-m>', ':set relativenumber!<CR>', { desc = 'Toggle relative line numbers' })
 
 -- Only add jumps greater than 5 to jump list
@@ -33,22 +33,22 @@ map('n', 'Q', '<nop>')
 map('n', '<M-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>', { desc = 'Run tmux-sessionizer' })
 
 -- Diagnostic keymaps
-map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous Diagnostic message' })
-map('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next Diagnostic message' })
-map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic Error messages' })
+map('n', '[d',         vim.diagnostic.goto_prev,  { desc = 'Go to previous Diagnostic message' })
+map('n', ']d',         vim.diagnostic.goto_next,  { desc = 'Go to next Diagnostic message' })
+map('n', '<leader>e',  vim.diagnostic.open_float, { desc = 'Show diagnostic Error messages' })
 map('n', '<leader>le', vim.diagnostic.setloclist, { desc = 'Open diagnostic Quickfix list' })
 
 -- Location list
-map('n', '<leader>ll', ':lopen<cr>', { desc = 'Open LocList' })
-map('n', '<leader>ld', ':lclose<cr>', { desc = 'Close LocList' })
-map('n', '<leader>ln', ':lnext<cr>', { desc = 'Next LocList item' })
-map('n', '<leader>lp', ':lprev<cr>', { desc = 'Prev LocList item' })
+map('n', '<leader>ll', '<cmd>lopen<cr>',  { desc = 'Open LocList' })
+map('n', '<leader>ld', '<cmd>lclose<cr>', { desc = 'Close LocList' })
+map('n', '<leader>ln', '<cmd>lnext<cr>',  { desc = 'Next LocList item' })
+map('n', '<leader>lp', '<cmd>lprev<cr>',  { desc = 'Prev LocList item' })
 
 -- Quickfix list
-map('n', '<leader>ql', ':copen<cr>', { desc = 'Open QFL' })
-map('n', '<leader>qd', ':cclose<cr>', { desc = 'Close QFL' })
-map('n', '<leader>qn', ':cnext<cr>', { desc = 'Next QFL item' })
-map('n', '<leader>qp', ':cprev<cr>', { desc = 'Prev QFL item' })
+map('n', '<leader>ql', '<cmd>copen<cr>',  { desc = 'Open QFL' })
+map('n', '<leader>qd', '<cmd>cclose<cr>', { desc = 'Close QFL' })
+map('n', '<leader>qn', '<cmd>cnext<cr>',  { desc = 'Next QFL item' })
+map('n', '<leader>qp', '<cmd>cprev<cr>',  { desc = 'Prev QFL item' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -56,10 +56,10 @@ map('n', '<leader>qp', ':cprev<cr>', { desc = 'Prev QFL item' })
 map('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- Disable arrow keys in normal mode
-map('n', '<left>', '<cmd>echo "Use h to move!"<CR>')
+map('n', '<left>',  '<cmd>echo "Use h to move!"<CR>')
 map('n', '<right>', '<cmd>echo "Use l to move!"<CR>')
-map('n', '<up>', '<cmd>echo "Use k to move!"<CR>')
-map('n', '<down>', '<cmd>echo "Use j to move!"<CR>')
+map('n', '<up>',    '<cmd>echo "Use k to move!"<CR>')
+map('n', '<down>',  '<cmd>echo "Use j to move!"<CR>')
 
 -- Windows
 -- Easier to use <leader>w then <C-w>
@@ -70,7 +70,7 @@ map('n', '<leader>wn', '<C-w>n', { desc = 'New window' })
 
 map('n', '<leader>ww', '<C-w>p', { desc = 'Switch to previous window' })
 
-map('n', '<leader>ws', ':split<CR><C-w>w', { desc = 'Horizontal split' })
+map('n', '<leader>ws',  ':split<CR><C-w>w',  { desc = 'Horizontal split' })
 map('n', '<leader>wvs', ':vsplit<CR><C-w>w', { desc = 'Vertifcal split' })
 
 map('n', '<leader>wh', '<C-w>h', { desc = 'Switch to left window' })
@@ -78,11 +78,16 @@ map('n', '<leader>wj', '<C-w>j', { desc = 'Switch to down window' })
 map('n', '<leader>wk', '<C-w>k', { desc = 'Switch to up window' })
 map('n', '<leader>wl', '<C-w>l', { desc = 'Switch to right window' })
 
-map('n', '<leader>bj', ':bnext<CR>', { desc = 'Next buffer' })
-map('n', '<leader>bk', ':bprevious<CR>', { desc = 'Previous buffer' })
-map('n', '<leader>bl', ':buffers<CR>', { desc = 'List buffers' })
-map('n', '<leader>bq', ':bdelete<CR>', { desc = 'Close buffer' })
-map('n', '<leader>bd', ':bdelete<CR>', { desc = 'Close buffer' })
+map('n', '<C-Down>',  '<cmd>resize -5<CR>', { desc = 'Resize window decrease height' })
+map('n', '<C-Up>',    '<cmd>resize +5<CR>', { desc = 'Resize window increase height' })
+map('n', '<C-Left>',  '<cmd>vertical resize -5<CR>', { desc = 'Resize window decrease width' })
+map('n', '<C-Right>', '<cmd>vertical resize +5<CR>', { desc = 'Resize window increase width' })
+
+map('n', '<leader>bj', '<cmd>bnext<CR>',     { desc = 'Next buffer' })
+map('n', '<leader>bk', '<cmd>bprevious<CR>', { desc = 'Previous buffer' })
+map('n', '<leader>bl', '<cmd>buffers<CR>',   { desc = 'List buffers' })
+map('n', '<leader>bq', '<cmd>bdelete<CR>',   { desc = 'Close buffer' })
+map('n', '<leader>bd', '<cmd>bdelete<CR>',   { desc = 'Close buffer' })
 
 -- Highlight when yanking text
 vim.api.nvim_create_autocmd('TextYankPost', {
