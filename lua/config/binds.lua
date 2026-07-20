@@ -6,38 +6,37 @@ local function map(mode, key, binding, opts)
 	vim.keymap.set(mode, key, binding, options)
 end
 
--- Don't move cursor when appending line below
-map('n', 'J', 'mzJ`z')
--- Keep cursor centered for half page jump
-map('n', '<C-d>', '<C-d>zz')
-map('n', '<C-u>', '<C-u>zz')
--- Keep cursor centered for searching
-map('n', 'n', 'nzzzv')
-map('n', 'N', 'Nzzzv')
+map('n', 'J', 'mzJ`z', { desc = 'Append line below without moving cursor' })
+map('n', '<C-d>', '<C-d>zz', { desc = 'Half page down, keep cursor centered' })
+map('n', '<C-u>', '<C-u>zz', { desc = 'Half page up, keep cursor centered' })
+map('n', 'n', 'nzzzv', { desc = 'Next search result, keep cursor centered' })
+map('n', 'N', 'Nzzzv', { desc = 'Previous search result, keep cursor centered' })
 
--- Move selected lines up and down with <Shift>jk
-map('v', 'J', ":m '>+1<CR>gv=gv")
-map('v', 'K', ":m '<-2<CR>gv=gv")
+map('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
+map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
-map('n', '<C-n><C-n>', ':set nonumber!<CR>' )
-map('n', '<C-m><C-m>', ':set relativenumber!<CR>')
+map('x', '<leader>p', '"_dP', { desc = 'Paste without yanking' })
+map({ 'n', 'v' }, '<leader>x', '"_d', { desc = 'Delete without yanking' })
+
+map('n', '<C-n><C-n>', ':set nonumber!<CR>', { desc = 'Toggle line numbers' })
+map('n', '<C-m><C-m>', ':set relativenumber!<CR>', { desc = 'Toggle relative line numbers' })
 
 -- Only add jumps greater than 5 to jump list
 -- Also handle wrapped lines better
-map('n', 'j', '(v:count > 5 ? "m\'" . v:count : "") . "gj"', { expr = true })
-map('n', 'k', '(v:count > 5 ? "m\'" . v:count : "") . "gk"', { expr = true })
+map('n', 'j', '(v:count > 5 ? "m\'" . v:count : "") . "gj"', { expr = true, desc = 'Jump forward, improved' })
+map('n', 'k', '(v:count > 5 ? "m\'" . v:count : "") . "gk"', { expr = true, desc = 'Jump backward, improved' })
 
 -- Q - "Worst place in the universe." ~ThePrimeagen
+-- Disable Ex mode. Can still get there with gQ
 map('n', 'Q', '<nop>')
 
--- Execute tmux-sessionizer
-map('n', '<M-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
+map('n', '<M-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>', { desc = 'Run tmux-sessionizer' })
 
 -- Diagnostic keymaps
-map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-map('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-map('n', '<leader>le', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous Diagnostic message' })
+map('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next Diagnostic message' })
+map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic Error messages' })
+map('n', '<leader>le', vim.diagnostic.setloclist, { desc = 'Open diagnostic Quickfix list' })
 
 -- Location list
 map('n', '<leader>ll', ':lopen<cr>', { desc = 'Open LocList' })
@@ -54,9 +53,6 @@ map('n', '<leader>qp', ':cprev<cr>', { desc = 'Prev QFL item' })
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
 map('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- Disable arrow keys in normal mode
@@ -74,7 +70,7 @@ map('n', '<leader>wn', '<C-w>n', { desc = 'New window' })
 
 map('n', '<leader>ww', '<C-w>p', { desc = 'Switch to previous window' })
 
-map('n', '<leader>ws', ':split<CR><C-w>w', { desc = 'Split' })
+map('n', '<leader>ws', ':split<CR><C-w>w', { desc = 'Horizontal split' })
 map('n', '<leader>wvs', ':vsplit<CR><C-w>w', { desc = 'Vertifcal split' })
 
 map('n', '<leader>wh', '<C-w>h', { desc = 'Switch to left window' })
@@ -82,18 +78,13 @@ map('n', '<leader>wj', '<C-w>j', { desc = 'Switch to down window' })
 map('n', '<leader>wk', '<C-w>k', { desc = 'Switch to up window' })
 map('n', '<leader>wl', '<C-w>l', { desc = 'Switch to right window' })
 
--- Buffers
-map('n', '<leader>bj', ':bnext<CR>', { desc = 'Next' })
-map('n', '<leader>bk', ':bprevious<CR>', { desc = 'Previous' })
-map('n', '<leader>bl', ':buffers<CR>', { desc = 'List buffer' })
-map('n', '<leader>bd', ':bdelete<CR>', { desc = 'Close' })
-map('n', '<leader>bq', ':bdelete<CR>', { desc = 'Close' })
-
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
+map('n', '<leader>bj', ':bnext<CR>', { desc = 'Next buffer' })
+map('n', '<leader>bk', ':bprevious<CR>', { desc = 'Previous buffer' })
+map('n', '<leader>bl', ':buffers<CR>', { desc = 'List buffers' })
+map('n', '<leader>bq', ':bdelete<CR>', { desc = 'Close buffer' })
+map('n', '<leader>bd', ':bdelete<CR>', { desc = 'Close buffer' })
 
 -- Highlight when yanking text
---  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
