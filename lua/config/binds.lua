@@ -38,6 +38,10 @@ map('n', ']d',         vim.diagnostic.goto_next,  { desc = 'Go to next Diagnosti
 map('n', '<leader>e',  vim.diagnostic.open_float, { desc = 'Show diagnostic Error messages' })
 map('n', '<leader>le', vim.diagnostic.setloclist, { desc = 'Open diagnostic Quickfix list' })
 
+map("n", "<leader>td", function()
+	vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = "Toggle diagnostics" })
+
 -- Location list
 map('n', '<leader>ll', '<cmd>lopen<cr>',  { desc = 'Open LocList' })
 map('n', '<leader>ld', '<cmd>lclose<cr>', { desc = 'Close LocList' })
