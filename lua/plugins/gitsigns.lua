@@ -1,6 +1,8 @@
-vim.pack.add({ src = 'lewis6991/gitsigns.nvim', name = 'gitsigns' })
+vim.pack.add({
+  { src = 'https://github.com/lewis6991/gitsigns.nvim', name = 'gitsigns' }
+})
 
-require('gitsigns').setup(){
+require('gitsigns').setup({
   on_attach = function(bufnr)
     local gitsigns = require('gitsigns')
 
@@ -63,4 +65,4 @@ require('gitsigns').setup(){
     -- Text object
     map({'o', 'x'}, 'ih', gitsigns.select_hunk)
   end
-}
+})
