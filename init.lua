@@ -84,7 +84,7 @@ vim.opt.diffopt:append('linematch:60')
 vim.opt.redrawtime = 10000
 vim.opt.maxmempattern = 20000
 
-lim.opt.list = false
+vim.opt.list = false
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣', extends = "⟩", precedes = "⟨" }
 
 vim.opt.termguicolors = true
@@ -93,3 +93,14 @@ vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
 
 -- Allow selection of empty space in line block mode
 vim.opt.virtualedit = 'block'
+
+-- wrap, linebreak and spellcheck on markdown and text files
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup,
+	pattern = { "markdown", "text", "gitcommit" },
+	callback = function()
+		vim.opt_local.wrap = true
+		vim.opt_local.linebreak = true
+		vim.opt_local.spell = true
+	end,
+})
