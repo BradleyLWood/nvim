@@ -1,66 +1,73 @@
 {
-  description = "Neovim dev shell";
+  description = "Flake exporting a configured neovim package";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
+    wrappers.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Demo on fetching plugins from outside nixpkgs
+    #plugins-lze = {
+    #  url = "github:BirdeeHub/lze";
+    #  flake = false;
+    #};
+    # These 2 are already in nixpkgs, however this ensures you always fetch the most up to date version!
+    #plugins-lzextras = {
+    #  url = "github:BirdeeHub/lzextras";
+    #  flake = false;
+    #};
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      wrappers,
+      ...
+    }@inputs:
     let
-      supportedSystems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwing"];
+      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.platforms.all;
+      module = nixpkgs.lib.modules.importApply ./module.nix inputs;
+      wrapper = wrappers.lib.evalModule module;
+    in
+    # for demonstration purposes, we will set up all the outputs.
+    {
+      wrapperModules = {
+        neovim = module;
+        default = self.wrapperModules.neovim;
+      };
 
-      # Helper to apply pkgs to all systems
-      forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f (import nixpkgs {inherit system;}));
-    in {
+      wrappers = {
+        neovim = wrapper.config;
+        default = self.wrappers.neovim;
+      };
+
+      overlays = {
+        neovim = final: prev: { neovim = self.wrappers.neovim.wrap { pkgs = final; }; };
+        default = self.overlays.neovim;
+      };
+
       packages = forAllSystems (
-        pkgs: let
-          pkglist = with pkgs; [
-            lua-language-server
-            vscode-langservers-extracted
-            emmet-language-server
-            rust-analyzer
-            prettier
-            black
-            rustfmt
-            typescript-language-server
-            tailwindcss-language-server
-            stylua
-            nixd
-
-            lua5_1
-            tree-sitter
-						fd
-            ripgrep
-            gcc
-            fzf
-            gnumake
-            imagemagick
-            luarocks
-          ];
-        in {
-          default = inputs.wrappers.wrappers.neovim.wrap {
-            inherit pkgs;
-            env = {
-              "CONFIG_ROOT" = ./.;
-              "NVIM_APPNAME" = "nvim-blw-remote";
-            };
-            runtimePkgs = with pkgs; [
-              lua5_1
-              tree-sitter
-							fd
-              ripgrep
-              gcc
-              fzf
-              luarocks
-            ];
-            settings.config_directory = ./.;
-          };
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        {
+          neovim = self.wrappers.neovim.wrap { inherit pkgs; };
+          default = self.packages.${system}.neovim;
         }
       );
+
+      # nixos modules
+      # `wrappers.neovim.enable = true`
+      # You can set any of the options.
+      # But that is how you enable it.
+      nixosModules = {
+        default = self.nixosModules.neovim;
+        neovim = wrappers.lib.getInstallModule {
+          name = "neovim";
+          value = module;
+        };
+      };
     };
 }
