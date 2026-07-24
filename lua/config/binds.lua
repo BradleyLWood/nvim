@@ -42,6 +42,9 @@ map("n", "<leader>td", function()
 	vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle diagnostics" })
 
+-- LSP
+map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP code action' })
+
 -- Location list
 map('n', '<leader>ll', '<cmd>lopen<cr>',  { desc = 'Open LocList' })
 map('n', '<leader>ld', '<cmd>lclose<cr>', { desc = 'Close LocList' })
