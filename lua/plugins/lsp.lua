@@ -62,7 +62,7 @@ require("blink.cmp").setup({
 	fuzzy = { implementation = "lua" },
 
 	signature = {
-		enabled = false,
+		enabled = true,
 	},
 
 	completion = {
@@ -88,7 +88,8 @@ require("blink.cmp").setup({
 
 	-- Keymaps
 	keymap = {
-		["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+		["<C-u>"] = { "scroll_signature_up", "fallback" },
+		["<C-d>"] = { "scroll_signature_down", "fallback" },
 	},
 	sources = {
 		default = {
@@ -98,17 +99,17 @@ require("blink.cmp").setup({
 			"path", -- (Equivalent to cmp-path)
 		},
 		providers = {
-			-- lazydev = {
-			-- 	name = "LazyDev",
-			-- 	module = "lazydev.integrations.blink",
-			-- 	-- make lazydev completions top priority (see `:h blink.cmp`)
-			-- 	score_offset = 100,
-			-- },
+			lazydev = {
+				name = "LazyDev",
+				module = "lazydev.integrations.blink",
+				-- make lazydev completions top priority (see `:h blink.cmp`)
+				score_offset = 100,
+			},
 		},
 	},
 })
 
-vim.api.nvim_create_autocmd("FileType", { -- Lazy load lazydev when in lua file (no pun intended)
+vim.api.nvim_create_autocmd("FileType", { -- Lazy load lazydev when in lua file
 	pattern = "lua",
 	callback = function()
 		vim.pack.add({

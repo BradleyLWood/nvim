@@ -5,17 +5,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
     wrappers.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Demo on fetching plugins from outside nixpkgs
-    #plugins-lze = {
-    #  url = "github:BirdeeHub/lze";
-    #  flake = false;
-    #};
-    # These 2 are already in nixpkgs, however this ensures you always fetch the most up to date version!
-    #plugins-lzextras = {
-    #  url = "github:BirdeeHub/lzextras";
-    #  flake = false;
-    #};
   };
 
   outputs =
@@ -58,10 +47,6 @@
         }
       );
 
-      # nixos modules
-      # `wrappers.neovim.enable = true`
-      # You can set any of the options.
-      # But that is how you enable it.
       nixosModules = {
         default = self.nixosModules.neovim;
         neovim = wrappers.lib.getInstallModule {

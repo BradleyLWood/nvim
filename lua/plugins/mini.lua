@@ -1,13 +1,5 @@
 vim.pack.add({
-    { src = 'https://github.com/nvim-mini/mini.statusline', name = 'mini.statusline' },
-    --{ src = 'https://github.com/nvim-mini/mini.git', name = 'mini.git' },
-    --{ src = 'https://github.com/nvim-mini/mini.diff', name = 'mini.diff' },
-    { src = 'https://github.com/nvim-mini/mini.animate', name = 'mini.animate' },
-    { src = 'https://github.com/nvim-mini/mini.pairs', name = 'mini.pairs' },
-    { src = 'https://github.com/nvim-mini/mini.surround', name = 'mini.surround' },
-    { src = 'https://github.com/nvim-mini/mini.ai', name = 'mini.ai' },
-    { src = 'https://github.com/nvim-mini/mini.trailspace', name = 'mini.trailspace' },
-    { src = 'https://github.com/nvim-mini/mini.icons', name = 'mini.icons' },
+    { src = 'https://github.com/nvim-mini/mini.nvim', name = 'mini' },
 })
 
 require('mini.statusline').setup()
