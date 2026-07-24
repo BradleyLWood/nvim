@@ -26,7 +26,7 @@ inputs:
       tailwindcss-language-server
       stylua
       nixd
-      nixfmt
+      alejandra
       lua5_1
       tree-sitter
 			fd
