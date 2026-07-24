@@ -228,7 +228,7 @@ inputs:
 
   config.envDefault = {
     "CONFIG_ROOT" = ./.;
-    "NVIM_APPNAME" = "nvim-diotic-drone-remote";
+    "NVIM_APPNAME" = "nvim-blw";
   };
 
   # Inform our lua of which top level specs are enabled
