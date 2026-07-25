@@ -7,7 +7,15 @@ require("snacks").setup({
 	dashboard = { enabled = false },
 	explorer = { enabled = false },
 	indent = { enabled = true },
-	picker = { enabled = true },
+	picker = {
+		enabled = true,
+		sort = {
+			fields = { "score:desc", "#text", "idx" },
+		},
+		debug = {
+			scores = true,
+		},
+	},
 	notifier = {
 		enabled = true,
 		timeout = 3000,
@@ -163,3 +171,4 @@ end, { desc = "Toggle Zoom" })
 map("n", "<leader>.", function()
 	Snacks.scratch()
 end, { desc = "Scratch Buffer" })
+
