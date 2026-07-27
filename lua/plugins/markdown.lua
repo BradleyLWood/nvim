@@ -25,6 +25,8 @@ require('render-markdown').setup({
 
 local obsidian = require('obsidian')
 obsidian.setup({
+    legacy_commands = false,
+
     workspaces = {
         {
             name = 'vault',
@@ -35,6 +37,7 @@ obsidian.setup({
             path = '~/notes/work',
         },
     },
+
     templates = {
         folder = 'Templates',
         date_format = '%Y-%m-%d-%a',
