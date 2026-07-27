@@ -5,7 +5,7 @@ vim.pack.add({
 require("snacks").setup({
 	bigfile = { enabled = true },
 	dashboard = { enabled = false },
-	explorer = { enabled = false },
+	explorer = { enabled = true },
 	indent = { enabled = true },
 	picker = {
 		enabled = true,
@@ -75,6 +75,9 @@ end, { desc = "Recent" })
 map("n", "<leader>sw", function()
 	Snacks.picker.grep_word()
 end, { desc = "Visual selection search" })
+map("n", "<leader>se", function()
+	Snacks.picker.explorer()
+end, { desc = "Explorer" })
 
 map("n", '<leader>s"', function()
 	Snacks.picker.registers()

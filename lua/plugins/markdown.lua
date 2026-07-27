@@ -37,8 +37,9 @@ obsidian.setup({
     },
     templates = {
         folder = 'Templates',
-        --date_format = '%Y-%m-%d-%a',
+        date_format = '%Y-%m-%d-%a',
         time_format = '%H:%M',
+        substitutions = { },
     },
 })
 obsidian.ui = { enable = false }
