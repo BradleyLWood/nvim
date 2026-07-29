@@ -219,4 +219,4 @@ local function harpoon_picker()
     })
 end
 
-map('n', '<leader>ha', harpoon_picker, { desc = 'Open Harpoon in Stacks Picker' })
+map('n', '<leader>hl', harpoon_picker, { desc = 'Open Harpoon in Stacks Picker' })
