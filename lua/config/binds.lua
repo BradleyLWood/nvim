@@ -1,9 +1,9 @@
 local function map(mode, key, binding, opts)
-	local options = { noremap = true, silent = true }
-	if opts then
-		options = vim.tbl_extend('force', options, opts)
-	end
-	vim.keymap.set(mode, key, binding, options)
+    local options = { noremap = true, silent = true }
+    if opts then
+        options = vim.tbl_extend('force', options, opts)
+    end
+    vim.keymap.set(mode, key, binding, options)
 end
 
 map('n', 'J', 'mzJ`z', { desc = 'Append line below without moving cursor' })
@@ -12,8 +12,8 @@ map('n', '<C-u>', '<C-u>zz', { desc = 'Half page up, keep cursor centered' })
 map('n', 'n', 'nzzzv', { desc = 'Next search result, keep cursor centered' })
 map('n', 'N', 'Nzzzv', { desc = 'Previous search result, keep cursor centered' })
 
-map('v', 'J', ':m ">+1<cr>gv=gv', { desc = 'Move selection down' })
-map('v', 'K', ':m "<-2<cr>gv=gv', { desc = 'Move selection up' })
+map('v', 'J', ":m '>+1<cr>gv=gv", { desc = 'Move selection down' })
+map('v', 'K', ":m '<-2<cr>gv=gv", { desc = 'Move selection up' })
 
 map('x', '<leader>p', '"_dP', { desc = 'Paste without yanking' })
 map({ 'n', 'v' }, '<leader>x', '"_d', { desc = 'Delete without yanking' })
@@ -34,16 +34,16 @@ map('n', '<M-f>', '<cmd>silent !tmux neww tmux-sessionizer<cr>', { desc = 'Run t
 
 -- Diagnostic keymaps
 map('n', '[d', function()
-	vim.diagnostic.jump({ count = -1, on_jump = vim.diagnostic.open_float })
+    vim.diagnostic.jump({ count = -1, on_jump = vim.diagnostic.open_float })
 end, { desc = 'Go to previous Diagnostic message' })
 map('n', ']d', function()
-	vim.diagnostic.jump({ count = 1, on_jump = vim.diagnostic.open_float })
+    vim.diagnostic.jump({ count = 1, on_jump = vim.diagnostic.open_float })
 end, { desc = 'Go to next Diagnostic message' })
 map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic Error messages' })
 map('n', '<leader>le', vim.diagnostic.setloclist, { desc = 'Open diagnostic Quickfix list' })
 
 map('n', '<leader>td', function()
-	vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = 'Toggle diagnostics' })
 
 -- LSP
@@ -102,9 +102,9 @@ map('n', '<leader>bd', '<cmd>bdelete<cr>', { desc = 'Close buffer' })
 
 -- Highlight when yanking text
 vim.api.nvim_create_autocmd('TextYankPost', {
-	desc = 'Highlight when yanking (copying) text',
-	group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+    desc = 'Highlight when yanking (copying) text',
+    group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })
