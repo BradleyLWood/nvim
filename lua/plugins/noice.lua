@@ -5,11 +5,19 @@ vim.pack.add({
 })
 
 require('noice').setup({
-        view = 'mini',
-        view_error = 'notify',
-        view_warn = 'notify',
-        view_history = 'messages',
-        view_search = 'virtualtext',
+    view = 'mini',
+    view_error = 'notify',
+    view_warn = 'notify',
+    view_history = 'messages',
+    view_search = 'virtualtext',
+    views = {
+        cmdline_popup = {
+            position = {
+                row = -8,
+                col = '50%',
+            },
+        },
+    },
     messages = {
         enabled = false,
     },
