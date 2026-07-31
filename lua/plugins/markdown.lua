@@ -46,7 +46,7 @@ obsidian.setup({
     },
 
     callbacks = {
-        pre_write_note - function (client, note)
+        pre_write_note = function (client, note)
             if not note:has_field('created') then
                 note:add_field('created', os.date('%Y-%m-%d %I:%M:%S %p'))
             end
