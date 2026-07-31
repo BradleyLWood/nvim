@@ -42,15 +42,26 @@ obsidian.setup({
         folder = 'Templates',
         date_format = '%Y-%m-%d-%a',
         time_format = '%H:%M',
-        substitutions = { },
+        substitutions = {},
     },
 
-    callbacks = {
-        pre_write_note = function (note)
-            if not note:has_field('created') then
-                note:add_field('created', os.date('%Y-%m-%d %I:%M:%S %p'))
+    frontmatter = {
+        func = function(note)
+            local out = { id = note.id, aliases = note.aliases, tags = note.tags }
+
+            if note.metadata and not vim.tbl_isempty(note.metadata) then
+                for k, v in pairs(note.metadata) do
+                    out[k] = v
+                end
             end
-                note:add_field('modified', os.date('%Y-%m-%d %I:%M:%S %p'))
+
+            if not out.created then
+                out.created = os.date('%Y-%m-%d %I:%M:%S %p')
+            end
+
+            out.modified = os.date('%Y-%m-%d %I:%M:%S %p')
+
+            return out
         end,
     },
 })
