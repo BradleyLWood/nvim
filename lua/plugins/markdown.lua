@@ -44,6 +44,15 @@ obsidian.setup({
         time_format = '%H:%M',
         substitutions = { },
     },
+
+    callbacks = {
+        pre_write_note - function (client, note)
+            if not note:has_field('created') then
+                note:add_field('created', os.date('%Y-%m-%d %I:%M:%S %p'))
+            end
+                note:add_field('modified', os.date('%Y-%m-%d %I:%M:%S %p'))
+        end,
+    },
 })
 obsidian.ui = { enable = false }
 --obsidian.event = {

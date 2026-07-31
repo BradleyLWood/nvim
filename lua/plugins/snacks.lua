@@ -1,8 +1,133 @@
 vim.pack.add({
     { src = 'https://github.com/folke/snacks.nvim', name = 'snacks' },
     { src = 'https://github.com/nvim-lua/plenary.nvim', name = 'plenary' },
-    { src = 'https://github.com/ThePrimeagen/harpoon', name = 'harpoon', version = 'harpoon2' },
+    { src = 'https://github.com/ThePrimeagen/harpoon', name = 'harpoon', version = 'harpoon' },
 })
+
+local function map(mode, key, binding, opts)
+    local options = { noremap = true, silent = true }
+    if opts then
+        options = vim.tbl_extend('force', options, opts)
+    end
+    vim.keymap.set(mode, key, binding, options)
+end
+
+local harpoon = require('harpoon')
+harpoon:setup()
+
+map('n', '<leader>a', function()
+    harpoon:list():add()
+end, { desc = 'Add file to Harpoon' })
+
+map('n', '<C-h>', function()
+    harpoon:list():select(1)
+end, { desc = 'Harpoon select 1' })
+
+map('n', '<C-j>', function()
+    harpoon:list():select(2)
+end, { desc = 'Harpoon select 2' })
+
+map('n', '<C-k>', function()
+    harpoon:list():select(3)
+end, { desc = 'Harpoon select 3' })
+
+map('n', '<C-l>', function()
+    harpoon:list():select(4)
+end, { desc = 'Harpoon select 4' })
+
+local harpoon_picker = {
+    title = 'Harpoon',
+
+    finder = function()
+        local list = harpoon:list()
+        local items = {}
+
+        for i, item in ipairs(list.items) do
+            if item and item.value and item.value:match('%S') then
+                table.insert(items, {
+                    idx = i,
+                    text = item.value,
+                    file = item.value,
+                    pos = item.context and { item.context.row, item.context.col } or nil,
+                    harpoon_item = item,
+                })
+            end
+        end
+        return items
+    end,
+
+    format = 'text',
+    preview = 'file',
+    confirm = 'jump',
+    sort = { fields = { 'idx' } },
+
+    actions = {
+        harpoon_delete = function(picker)
+            local list = harpoon:list()
+            local selected = picker:selected({ fallback = true })
+
+            table.sort(selected, function(a, b)
+                return a.idx > b.idx
+            end)
+
+            for _, item in ipairs(selected) do
+                table.remove(list.items, item.idx)
+                list._length = math.max(0, (list._length or #list.items) - 1)
+            end
+
+            harpoon:sync()
+
+            -- Refresh list
+            picker:find()
+            if picker:count() == 0 then
+                picker:close()
+            else
+                picker.list:view(math.min(picker.list.cursor, picker:count()))
+            end
+        end,
+
+        -- Move item up
+        harpoon_move_up = function(picker, item)
+            local list = harpoon:list()
+            if not item or item.idx <= 1 then
+                return
+            end
+            local i = item.idx
+            list.items[i], list.items[i - 1] = list.items[i - 1], list.items[i]
+            --picker:find()
+            picker.list:view(i - 1)
+        end,
+
+        -- Move item down
+        harpoon_move_down = function(picker, item)
+            local list = harpoon:list()
+            if not item or item.idx >= #list.items then
+                return
+            end
+            local i = item.idx
+            list.items[i], list.items[i + 1] = list.items[i + 1], list.items[i]
+            --picker:find()
+            picker.list:view(i + 1)
+        end,
+    },
+
+    win = {
+        input = {
+            keys = {
+                ['dd'] = { 'harpoon_remove', mode = { 'n' } },
+                ['J'] = { 'harpoon_move_down', mode = { 'n' } },
+                ['K'] = { 'harpoon_move_up', mode = { 'n' } },
+            },
+        },
+        list = {
+            keys = {
+                ['dd'] = { 'harpoon_remove', mode = { 'n' } },
+                ['J'] = { 'harpoon_move_down', mode = { 'n' } },
+                ['K'] = { 'harpoon_move_up', mode = { 'n' } },
+            },
+        },
+    },
+}
 
 require('snacks').setup({
     bigfile = { enabled = true },
@@ -14,9 +139,12 @@ require('snacks').setup({
         sort = {
             fields = { 'score:desc', '#text', 'idx' },
         },
-        debug = {
-            scores = true,
-        },
+        --debug = {
+        --    scores = true,
+        --},
+        sources = {
+            harpoon = harpoon_picker,
+        }
     },
     notifier = {
         enabled = true,
@@ -32,15 +160,11 @@ require('snacks').setup({
     zen = { enabled = true },
 })
 
-local function map(mode, key, binding, opts)
-    local options = { noremap = true, silent = true }
-    if opts then
-        options = vim.tbl_extend('force', options, opts)
-    end
-    vim.keymap.set(mode, key, binding, options)
-end
-
 -- Pickers
+map('n', '<leader>hl', function()
+    Snacks.picker.pick('harpoon')
+end, { desc = 'Harpoon' })
+
 map('n', '<leader>sf', function()
     Snacks.picker.files()
 end, { desc = 'Files' })
@@ -177,46 +301,3 @@ map('n', '<leader>.', function()
     Snacks.scratch()
 end, { desc = 'Scratch Buffer' })
 
-local harpoon = require('harpoon')
-harpoon:setup()
-
-map('n', '<leader>a', function()
-    harpoon:list():add()
-end, { desc = 'Add file to Harpoon' })
-
-map('n', '<C-h>', function()
-    harpoon:list():select(1)
-end, { desc = 'Harpoon select 1' })
-
-map('n', '<C-j>', function()
-    harpoon:list():select(2)
-end, { desc = 'Harpoon select 2' })
-
-map('n', '<C-k>', function()
-    harpoon:list():select(3)
-end, { desc = 'Harpoon select 3' })
-
-map('n', '<C-l>', function()
-    harpoon:list():select(4)
-end, { desc = 'Harpoon select 4' })
-
-local function harpoon_picker()
-    local list = harpoon:list()
-    local items = {}
-
-    for i, item in ipairs(list.items) do
-        table.insert(items, {
-            text = item.value,
-            file = item.value,
-            idx = i,
-        })
-    end
-
-    Snacks.picker({
-        title = 'Harpoon',
-        items = items,
-        format = 'file',
-    })
-end
-
-map('n', '<leader>hl', harpoon_picker, { desc = 'Open Harpoon in Stacks Picker' })
