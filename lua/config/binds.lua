@@ -30,7 +30,7 @@ map('n', 'k', '(v:count > 5 ? "m\'" . v:count : "") . "gk"', { expr = true, desc
 -- Disable Ex mode. Can still get there with gQ
 map('n', 'Q', '<nop>')
 
-map('n', '<M-f>', '<cmd>silent !tmux neww tmux-sessionizer<cr>', { desc = 'Run tmux-sessionizer' })
+--map('n', '<M-f>', '<cmd>silent !tmux neww tmux-sessionizer<cr>', { desc = 'Run tmux-sessionizer' })
 
 -- Diagnostic keymaps
 map('n', '[d', function()
@@ -81,8 +81,8 @@ map('n', '<leader>wn', '<C-w>n', { desc = 'New window' })
 
 map('n', '<leader>ww', '<C-w>p', { desc = 'Switch to previous window' })
 
-map('n', '<leader>ws', '<cmd>split<cr><C-w>w', { desc = 'Horizontal split' })
-map('n', '<leader>wvs', '<cmd>vsplit<cr><C-w>w', { desc = 'Vertifcal split' })
+map('n', '<leader>ws', '<cmd>vsplit<cr><C-w>w', { desc = 'Vertifcal split' })
+map('n', '<leader>wS', '<cmd>split<cr><C-w>w', { desc = 'Horizontal split' })
 
 map('n', '<leader>wh', '<C-w>h', { desc = 'Switch to left window' })
 map('n', '<leader>wj', '<C-w>j', { desc = 'Switch to down window' })
