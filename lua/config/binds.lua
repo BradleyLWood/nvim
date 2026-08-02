@@ -81,8 +81,8 @@ map('n', '<leader>wn', '<C-w>n', { desc = 'New window' })
 
 map('n', '<leader>ww', '<C-w>p', { desc = 'Switch to previous window' })
 
-map('n', '<leader>ws', '<cmd>vsplit<cr><C-w>w', { desc = 'Vertifcal split' })
-map('n', '<leader>wS', '<cmd>split<cr><C-w>w', { desc = 'Horizontal split' })
+map('n', '<leader>ws', '<cmd>vsplit<cr>', { desc = 'Vertifcal split' })
+map('n', '<leader>wS', '<cmd>split<cr>', { desc = 'Horizontal split' })
 
 map('n', '<leader>wh', '<C-w>h', { desc = 'Switch to left window' })
 map('n', '<leader>wj', '<C-w>j', { desc = 'Switch to down window' })
