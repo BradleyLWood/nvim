@@ -233,3 +233,4 @@ end, { desc = 'Toggle Zoom' })
 map('n', '<leader>.', function()
     Snacks.scratch()
 end, { desc = 'Scratch Buffer' })
+
