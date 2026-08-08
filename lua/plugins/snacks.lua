@@ -46,6 +46,17 @@ require('snacks').setup({
         enabled = true,
         sections = {
             { section = 'header' },
+            {
+                text = {
+                    { 'Neovim v', hl = 'SnacksDashboardIcon' },
+                    {
+                        vim.fn.has('nvim-0.10') == 1 and tostring(vim.version()) or 'Unknown',
+                        hl = 'SnacksDashboardDesc',
+                    },
+                },
+                align = 'center',
+                padding = 1,
+            },
         },
     },
     explorer = { enabled = true },
