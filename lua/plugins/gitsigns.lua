@@ -40,7 +40,7 @@ require('gitsigns').setup({
       gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
     end)
 
-		map('n', '<leader>hS', gitsigns.stage_buffer)
+	map('n', '<leader>hS', gitsigns.stage_buffer)
     map('n', '<leader>hR', gitsigns.reset_buffer)
     map('n', '<leader>hp', gitsigns.preview_hunk)
     map('n', '<leader>hi', gitsigns.preview_hunk_inline)
@@ -49,7 +49,7 @@ require('gitsigns').setup({
       gitsigns.blame_line({ full = true })
     end)
 
-		map('n', '<leader>hd', gitsigns.diffthis)
+	map('n', '<leader>hd', gitsigns.diffthis)
 
     map('n', '<leader>hD', function()
       gitsigns.diffthis('~')
