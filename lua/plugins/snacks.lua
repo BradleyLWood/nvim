@@ -42,7 +42,12 @@ end, { desc = 'Harpoon' })
 
 require('snacks').setup({
     bigfile = { enabled = true },
-    dashboard = { enabled = false },
+    dashboard = {
+        enabled = true,
+        sections = {
+            { section = 'header' },
+        },
+    },
     explorer = { enabled = true },
     indent = { enabled = true },
     picker = {
@@ -205,4 +210,3 @@ end, { desc = 'Toggle Zoom' })
 map('n', '<leader>.', function()
     Snacks.scratch()
 end, { desc = 'Scratch Buffer' })
-
