@@ -1,5 +1,5 @@
 vim.pack.add({
-    { src = 'nicolasgb/jj.nvim', name = 'jj' },
+    { src = 'https://github.com/nicolasgb/jj.nvim', name = 'jj' },
 })
 
 require('jj').setup({})
