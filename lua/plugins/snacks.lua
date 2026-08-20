@@ -59,12 +59,6 @@ require('snacks').setup({
             },
         },
     },
-    dashboard = {
-        enabled = true,
-        sections = {
-            { section = 'header' },
-        },
-    },
     explorer = { enabled = true },
     indent = { enabled = true },
     picker = {

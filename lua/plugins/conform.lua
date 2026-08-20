@@ -14,6 +14,8 @@ require('conform').setup({
         nix = { 'alejandra' },
         css = { 'prettier' },
         rust = { 'rustfmt' },
+        clojure = { 'zprint'}
+        --clojure = { 'cljfmt'}
     },
     formatters = {
         prettier = {
